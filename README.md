@@ -1,10 +1,9 @@
-# fitness-app
+# flow-app
 
 > A Vue.js project
 
 ## 效果图
 
-![](https://github.com/xingxiaoyiyio/vue2-vux-fitness-project/raw/master/static/3.jpg)
 
 ## Build Setup
 
