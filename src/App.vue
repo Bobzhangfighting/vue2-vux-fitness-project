@@ -6,7 +6,16 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data(){
+    return {
+      
+
+    }
+  },created(){
+    const root = process.env.API_ROOT;
+    console.log("root------>"+root);
+  }
 }
 </script>
 
@@ -16,4 +25,5 @@ export default {
 body {
   background-color: #fbf9fe;
 }
+
 </style>

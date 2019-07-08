@@ -1,25 +1,17 @@
 <template>
-  <div class="memberHome" style="height: 100%">
-   <view-box ref="viewbox" body-padding-top="46px">
+  <div class="memberHome" style="height: 100%;touch-action: none;">
+   <view-box ref="viewbox" body-padding-top="46px" body-padding-bottom="50px">
      <div class="vux-demo-header-box" slot="header">
-        <x-header :left-options="{backText: ''}" v-show="headShow">{{pageTitle}}</x-header>
+        <x-header :left-options="{backText: ''}" v-show="headShow" class="header">{{pageTitle}}</x-header>
      </div>
      <div v-transfer-dom class="loading-box">
         <loading :show="loading" position="absolute"></loading>
     </div>
-        <router-view></router-view>
+        <router-view :childHeight="childHeight"></router-view>
      <tabbar v-show="footerShow">
-      <tabbar-item selected link="/memberHome/newsIndex">
+      <tabbar-item selected link="/memberHome/completeflow?status=completed">
         <img slot="icon" src="../assets/images/icons/news_icon.png">
-        <span slot="label">最新活动</span>
-      </tabbar-item>
-      <tabbar-item link="/memberHome/groupCourses">
-        <img slot="icon" src="../assets/images/icons/group_icon.png">
-        <span slot="label">团体课</span>
-      </tabbar-item>
-      <tabbar-item  link="/memberHome/personalCourses">
-        <img slot="icon" src="../assets/images/icons/private_icon.png">
-        <span slot="label">私教课</span>
+        <span slot="label">已办流程</span>
       </tabbar-item>
       <tabbar-item link="/memberHome/mine">
         <img  slot="icon" src="../assets/images/icons/mine_icon.png">
@@ -33,9 +25,7 @@
 <script>
   import { Tabbar,Icon,TabbarItem ,XHeader,Loading,ViewBox} from 'vux'
   import { TransferDomDirective as TransferDom } from 'vux'
-
   import {mapGetters} from 'vuex'
- 
   export default {
     computed:mapGetters([
       'headShow',
@@ -45,12 +35,29 @@
     ]),
     data(){
       let data={
-
+        childHeight:(document.body.clientHeight-46-50)
       }
       return data
     },
+    watch:{
+      // 'screenHeight':function(val){
+      //   var oIframe = document.getElementById();
+      //   oIframe.style.height = 
+      // }
+    },
     mounted() {
-      
+      // this.childHeight = (document.body.clientHeight -46-50);
+      // this.calculationViewPort();
+      //  console.log(this.clientHeight);
+    },
+    methods:{
+       calculationViewPort(){
+         console.log("屏幕宽"+document.body.clientWidth);
+         console.log("屏幕高"+document.body.clientHeight);
+        console.log("主体内容高度"+(document.body.clientHeight -46-50));
+        
+       
+       }
     },
     directives: {
         TransferDom
@@ -83,6 +90,10 @@
  .memberHome .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
     color: #DD5858
 }
-
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
 </style>
 
