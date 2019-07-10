@@ -1,5 +1,7 @@
 'use strict'
+let API_ROOT = process.argv.splice(2)[0] || 'prod';
+console.log(API_ROOT);
 module.exports = {
   NODE_ENV: '"production"',
-  API_ROOT: '"http://test1.wxchina.com:16032"'//测试环境
+  API_ROOT: '"'+API_ROOT+'"'
 }

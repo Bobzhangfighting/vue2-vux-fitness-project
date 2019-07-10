@@ -1,6 +1,13 @@
 import HttpRequest from './HttpRequest.js'
-const baseUrl = process.env.API_ROOT;
+let baseUrl = "";//process.env.API_ROOT;
+//根据process.env.API_ROOT的值判断当前是什么环境
+//命令：npm run build -- test,设置的就是测试环境
+let Host = process.env.API_ROOT;
+Host = Host ==='prod'?'http://test1.wxchina.com:16032':'http://localhost:8080';
+baseUrl = Host;
 let url = {
+    //获取当前登录的用户
+    getCurrentUser:'/activitiPhone/getCurrentUser',
     // 已办流程、代办流程      
     finshedOrunfinshedList: '/activitiPhone/getFinshedFlow', 
     //具体流程走势
@@ -22,11 +29,20 @@ let url = {
     //根据表单Id获取节点审批表单id
     getFormIdById: '/activitiPhone/getFormIdById',
     //根据组别id获取该组人员情况
-    getPersonByGroupId: '/activitiPhone/getPersonByGroupId'
+    getPersonByGroupId: '/activitiPhone/getPersonByGroupId',
+    //转审
+    transferApproval:'/activitiPhone/transferApproval'
 }
 
 
 let  api = {
+    getCurrentUser(datas){
+        return HttpRequest.getRequest({
+            method:'GET',
+            url:baseUrl + url.getCurrentUser,
+            data:datas
+        });
+    },
     //已办流程、代办流程 
     finshedOrunfinshedList(datas){
         return HttpRequest.getRequest({
@@ -113,6 +129,14 @@ let  api = {
         return HttpRequest.getRequest({
             method:'POST',
             url:baseUrl + url.saveApprovalData,
+            data:datas
+        });
+    },
+    //转审
+    transferApproval(datas){
+        return HttpRequest.getRequest({
+            method:'POST',
+            url:baseUrl + url.transferApproval,
             data:datas
         });
     }

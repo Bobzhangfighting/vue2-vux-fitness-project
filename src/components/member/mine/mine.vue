@@ -79,7 +79,7 @@
       this.loadRunningFlowDetail();
       this.getFlowUp();
       this.myApplyCheck();
-    //  this.getCurrentUser();
+      this.getCurrentUser();
       this.$refs.mine.style.height = this.childHeight+'px';   //设置主体内容的高度
     },
     methods: {
@@ -120,15 +120,11 @@
         });
       },
       //获取当前登录者
-      getCurrentUser(){
+      async getCurrentUser(){
         let _self = this;
-        this.baseAjax({
-          type:'get',
-          url:'http://localhost:8080/a/activitiPhone/getCurrentUser',
-          showLoading:true,
-          success:function(data){
-              console.log("当前登录用户为"+data)
-            }
+        let params = {};
+        let result = await api.getCurrentUser(params).then(res=>{
+            console.log(res.data);
         });
       },
       //我的发起

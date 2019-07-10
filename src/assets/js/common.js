@@ -1,10 +1,13 @@
 
 import Vue from 'vue'
-import { AjaxPlugin,AlertPlugin } from 'vux'
-Vue.use(AlertPlugin)
-Vue.use(AjaxPlugin)
+// import { AjaxPlugin,AlertPlugin } from 'vux'
+// Vue.use(AlertPlugin)
+// Vue.use(AjaxPlugin)
+import { AlertModule } from 'vux'
+// Vue.prototype.$vux = AlertPlugin
 // 用于全局的公共函数
-const common ={
+
+let common ={
 	   // 本地存储
         localSet(obj,key){
             var newObj = obj;
@@ -37,18 +40,17 @@ const common ={
             return  Y+M+D+h+m+s;
         },
         showAlert(title,content){
-            this.$vux.alert.show({
+            AlertModule.show({
                 title: title,
                 content: content,
                 buttonText: '好的',
                 hideOnBlur: true,
                 maskZIndex: 100
-             }); 
+              })
         },
         datasubstring(val){
             var index =  val.lastIndexOf(',');
             var str = "https://kite.wxchina.com/file/"+ val.substring(index+1,val.length)
-            this.href = str;
             return str;
          }
 }

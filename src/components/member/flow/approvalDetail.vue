@@ -183,9 +183,11 @@ export default {
                 var resObject = res.data;
                     if(resObject.errorCode==0){
                         self.common.showAlert('温馨提示','流程执行成功');
-                        self.$router.push({
-                            path: '/',
-                        });
+                        setTimeout(function(){
+                            self.$router.push({
+                                path:'/'
+                            });
+                        },1000);
                     }else{
                         self.common.showAlert('温馨提示','流程执行失败');
                     }
@@ -239,11 +241,34 @@ export default {
                 });
             }
         },
-        checkedComfirm(){
-            console.log("确认");
+        async checkedComfirm(){
+            let _this = this;
+            //获取当前选中的节点
+            let checkPerson = this.$refs['tree'].getCheckedNodes();
+            let phone = checkPerson[0].phone;
+            console.log(phone);
+            let params = {};
+            params.taskId = _this.id;
+            params.phone = phone;
+            let result = await api.transferApproval(params).then(res=>{
+                    var resObject = res.data;
+                    console.log(resObject);
+                    if(resObject==='true'){
+                        _this.show = false;
+                        setTimeout(function(){
+                            _this.$router.push({
+                                path:'/'
+                            });
+                        });
+                    }else{
+                        _this.show = false;
+                        _this.common.showAlert('温馨提示','流程转审失败');
+                    }
+            });
         },
         resetChecked(){
             console.log("重置");
+            this.$refs.tree.setCheckedKeys([]);
         }
     },components:{
         Cell,
